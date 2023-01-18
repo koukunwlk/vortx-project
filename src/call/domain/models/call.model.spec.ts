@@ -1,9 +1,9 @@
 import { Call } from './call.model';
 import { Plan } from '../../../plan/domain/models/plan.model';
 import { Tariff } from '../../../tariff/domain/models/tariff.model';
-import { CreateCallInput } from '../dto/input/create-call.input';
 
-let createCallInput: CreateCallInput;
+let createCallInput
+
 //Mocks
 const tariff: Tariff = new Tariff({
   origin: '011',
@@ -80,7 +80,7 @@ function calculateCharges(
 
   withPlanCharge += (withPlanCharge / 100) * 10;
   return {
-    withPlan: withPlanCharge,
+    withPlan: withPlanCharge > 0 ? withPlanCharge : 0,
     withoutPlan: tariff.getTotalValue(minutes),
   };
 }

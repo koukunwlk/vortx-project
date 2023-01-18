@@ -1,9 +1,8 @@
 import { Model } from "../../../common/domain/model";
 import { Plan } from "../../../plan/domain/models/plan.model";
 import { Tariff } from "../../../tariff/domain/models/tariff.model";
-import { CreateCallInput } from "../dto/input/create-call.input";
 
-type CallProps = {
+export type CallProps = {
 	tariff: Tariff
 	plan: Plan
 	durationInMinutes: number;
@@ -17,7 +16,7 @@ type CallCharges = {
 
 export class Call extends Model<CallProps> {
 	protected props: CallProps = {} as CallProps; 
-	constructor({tariff, plan, durationInMinutes}: CreateCallInput, id?: string) {
+	constructor({tariff, plan, durationInMinutes}: Omit<CallProps, "percentage">, id?: string) {
 		super(id);
 		this.props.tariff = tariff
 		this.props.plan = plan

@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
-import { CallService } from './call.service';
-import { CallController } from './call.controller';
+import { PlanModule } from 'src/plan/plan.module';
+import { TariffModule } from 'src/tariff/tariff.module';
+import { CallController } from './adapters/api/call.controller';
+import { GetCallChargesUseCase } from './domain/use-cases/get-call-charges.use-case';
 
 @Module({
   controllers: [CallController],
-  providers: [CallService]
+  imports: [PlanModule, TariffModule],
+  providers: [GetCallChargesUseCase]
 })
 export class CallModule {}
