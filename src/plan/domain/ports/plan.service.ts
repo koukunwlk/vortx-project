@@ -4,13 +4,22 @@ import { PlanRepository } from './Plan.repository';
 
 @Injectable()
 export class PlanService {
-	@Inject(PlanRepository)
-	private readonly planRepository: PlanRepository
-
+	constructor(
+		@Inject(PlanRepository)
+		private readonly planRepository: PlanRepository
+	){
+		this.createAllPlans()
+	}
 	getAllPlans() {
 		const persistencePlan = this.planRepository.findAll()
 
 		return persistencePlan.map(({name, durationInMinutes, id}) => new Plan({name, durationInMinutes}, id))
+	}
+
+	getPlan(options: Record<string, unknown>): Plan {
+		const persistencePlan = this.planRepository.find(options)
+
+		return new Plan(persistencePlan, persistencePlan.id)
 	}
 
 	createAllPlans() {
@@ -28,7 +37,6 @@ export class PlanService {
 				durationInMinutes: 120
 			},
 		]
-		console.log("consturindo planos")
 		plans.forEach(plan => {
 			const planModel = new Plan(plan)
 			this.planRepository.create(planModel)

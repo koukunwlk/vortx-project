@@ -9,6 +9,7 @@ import { PlanInMemory } from './adapters/db/in-memory.repository';
   providers: [PlanService, {
 	provide: PlanRepository,
 	useClass: PlanInMemory
-  }]
+  }],
+  exports: [PlanService]
 })
 export class PlanModule {}
