@@ -1,7 +1,7 @@
 import { Model } from "../../../common/domain/model";
-import { CreatePlanInput } from "../dto/input/create-plan.input";
+import { PersistencePlan } from "../ports/Plan.repository";
 
-type PlanProps = {
+export type PlanProps = {
 	name: string
 	durationInMinutes: number;
 }
@@ -9,10 +9,11 @@ type PlanProps = {
 export class Plan extends Model<PlanProps> {
 	protected props = {} as PlanProps
 
-	constructor({name, durationInMinutes} : CreatePlanInput, id?: string) {
+	constructor({name, durationInMinutes} : PlanProps, id?: string) {
 		super(id)
 		this.props.name = name
 		this.props.durationInMinutes = durationInMinutes
+		console.log("inside constructor", this.props)
 	}
 
 	getPlanMinutesDiscount() {
