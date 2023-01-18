@@ -1,17 +1,17 @@
-import { CallModel } from './call.model';
-import { PlanModel } from '../../../plan/domain/models/plan.model';
-import { TariffModel } from '../../../tariff/domain/models/tariff.model';
+import { Call } from './call.model';
+import { Plan } from '../../../plan/domain/models/plan.model';
+import { Tariff } from '../../../tariff/domain/models/tariff.model';
 import { CreateCallInput } from '../dto/input/create-call.input';
 
 let createCallInput: CreateCallInput;
 //Mocks
-const tariff: TariffModel = new TariffModel({
+const tariff: Tariff = new Tariff({
   origin: '011',
   destination: '016',
   valuePerMinute: 1.9,
 });
 
-const plan: PlanModel = new PlanModel({
+const plan: Plan = new Plan({
   name: 'FaleMais30',
   durationInMinutes: 30,
 });
@@ -28,7 +28,7 @@ describe('Call Model UNIT tests', () => {
   describe('when input is valid', () => {
     it('should create a new call model WITH plan', () => {
       //Arrange
-      const call = new CallModel(createCallInput);
+      const call = new Call(createCallInput);
 
       //Assert
       expect(call).toBeDefined();
@@ -38,7 +38,7 @@ describe('Call Model UNIT tests', () => {
   describe('validating domain rules', () => {
     it('should calculate the total cost of the call without plan', () => {
       //Arrange
-      const call = new CallModel(createCallInput);
+      const call = new Call(createCallInput);
 
       //Act
       const totalCharges = calculateCharges(
@@ -54,7 +54,7 @@ describe('Call Model UNIT tests', () => {
 
     it('should calculate the total cost of the call with plan needs to be 10% greater', () => {
       //Arrange
-      const call = new CallModel(createCallInput);
+      const call = new Call(createCallInput);
 
       //Act
       const totalCharges = calculateCharges(
@@ -71,8 +71,8 @@ describe('Call Model UNIT tests', () => {
 });
 
 function calculateCharges(
-  plan: PlanModel,
-  tariff: TariffModel,
+  plan: Plan,
+  tariff: Tariff,
   minutes: number,
 ) {
   const minutesDiscount = plan.getPlanMinutesDiscount();

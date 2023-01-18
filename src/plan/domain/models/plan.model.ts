@@ -6,7 +6,7 @@ type PlanProps = {
 	durationInMinutes: number;
 }
 
-export class PlanModel extends Model<PlanProps> {
+export class Plan extends Model<PlanProps> {
 	protected props = {} as PlanProps
 
 	constructor({name, durationInMinutes} : CreatePlanInput, id?: string) {

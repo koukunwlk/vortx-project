@@ -1,4 +1,4 @@
-import { PlanModel } from "./plan.model"
+import { Plan } from "./plan.model"
 
 describe("Plan model UNIT tests", () => {
 
@@ -6,7 +6,7 @@ describe("Plan model UNIT tests", () => {
 		const input = {name: "FaleMais30", durationInMinutes: 30}
 		it("should be defined", () => {
 			//Arrange
-			const plan = new PlanModel(input)
+			const plan = new Plan(input)
 
 			//Assert
 			expect(plan).toBeDefined()
@@ -14,7 +14,7 @@ describe("Plan model UNIT tests", () => {
 
 		it("should return the duration of the plan ", () => {
 			//Arrange
-			const plan = new PlanModel(input)
+			const plan = new Plan(input)
 
 			//Act
 			const minutesDiscount = plan.getPlanMinutesDiscount()

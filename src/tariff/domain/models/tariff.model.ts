@@ -7,7 +7,7 @@ type TariffProps = {
 	valuePerMinute: number;
 }
 
-export class TariffModel extends Model<TariffProps> {
+export class Tariff extends Model<TariffProps> {
 	protected props = {} as TariffProps
 
 	constructor({origin, destination, valuePerMinute} : CreateTariffInput, id?: string) {
