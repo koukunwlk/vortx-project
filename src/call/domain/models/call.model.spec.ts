@@ -16,53 +16,71 @@ const plan: PlanModel = new PlanModel({
   durationInMinutes: 30,
 });
 
-describe('Call Model UNIT TESTS', () => {
+describe('Call Model UNIT tests', () => {
   beforeEach(() => {
     createCallInput = {
       tariff,
-	  plan,
-	  durationInMinutes: Math.random() * (150 - 0) + 0
+      plan,
+      durationInMinutes: Math.random() * (150 - 0) + 0,
     };
   });
 
   describe('when input is valid', () => {
     it('should create a new call model WITH plan', () => {
-	  //Arrange
+      //Arrange
       const call = new CallModel(createCallInput);
 
-	  //Assert
-	  expect(call).toBeDefined();
+      //Assert
+      expect(call).toBeDefined();
     });
-
-	it('should create a new call model WITHOUT plan', () => {
-		//Arrange
-		const call = new CallModel({...createCallInput, plan: undefined});
-  
-		//Assert
-		expect(call).toBeDefined();
-	  });
   });
 
-  it("should calculate the total cost of the call", () => {
-		//Arrange
-		const call = new CallModel(createCallInput);
+  describe('validating domain rules', () => {
+    it('should calculate the total cost of the call without plan', () => {
+      //Arrange
+      const call = new CallModel(createCallInput);
 
-		//Act
-		const totalCharges =  calculateCallCost(plan, tariff, createCallInput.durationInMinutes)
-		const totalCost = call.getCallCharges();
+      //Act
+      const totalCharges = calculateCharges(
+        plan,
+        tariff,
+        createCallInput.durationInMinutes,
+      );
+      const callTotalCharges = call.getCallCharges();
 
-		//Assert
-		expect(totalCost).toEqual(totalCharges)
-  })
+      //Assert
+      expect(callTotalCharges.withoutPlan).toEqual(totalCharges.withoutPlan);
+    });
 
-  
+    it('should calculate the total cost of the call with plan needs to be 10% greater', () => {
+      //Arrange
+      const call = new CallModel(createCallInput);
 
+      //Act
+      const totalCharges = calculateCharges(
+        plan,
+        tariff,
+        createCallInput.durationInMinutes,
+      );
+      const callTotalCharges = call.getCallCharges();
+
+      //Assert
+      expect(callTotalCharges.withPlan).toEqual(totalCharges.withPlan);
+    });
+  });
 });
 
-function calculateCallCost(plan: PlanModel, tariff: TariffModel, minutes: number) {
-	const minutesDiscount = plan.getPlanMinutesDiscount()
-	return {
-		withPlan: tariff.getTotalValue(minutes - minutesDiscount),
-		withoutPlan: tariff.getTotalValue(minutes)
-	}
+function calculateCharges(
+  plan: PlanModel,
+  tariff: TariffModel,
+  minutes: number,
+) {
+  const minutesDiscount = plan.getPlanMinutesDiscount();
+  let withPlanCharge = tariff.getTotalValue(minutes - minutesDiscount)
+
+  withPlanCharge += (withPlanCharge / 100) * 10;
+  return {
+    withPlan: withPlanCharge,
+    withoutPlan: tariff.getTotalValue(minutes),
+  };
 }

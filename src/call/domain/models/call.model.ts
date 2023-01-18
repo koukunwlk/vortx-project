@@ -5,8 +5,9 @@ import { CreateCallInput } from "../dto/input/create-call.input";
 
 type CallProps = {
 	tariff: TariffModel
-	plan?: PlanModel
+	plan: PlanModel
 	durationInMinutes: number;
+	percentage: number;
 }
 
 type CallCharges = {
@@ -21,18 +22,36 @@ export class CallModel extends Model<CallProps> {
 		this.props.tariff = tariff
 		this.props.plan = plan
 		this.props.durationInMinutes = durationInMinutes
+		this.props.percentage = 10
 	}
 
 	getCallCharges(): CallCharges{
 		const minutesDiscount = this.props.plan.getPlanMinutesDiscount()
 
 		return {
-			withPlan: this.calculateCallCost(this.props.durationInMinutes - minutesDiscount),
-			withoutPlan: this.calculateCallCost(this.props.durationInMinutes)
+			withPlan: this.calculateCallChargeWithPlan(this.props.durationInMinutes - minutesDiscount),
+			withoutPlan: this.calculateCallCharge(this.props.durationInMinutes)
 		}
 	}
 
-	private calculateCallCost(minutes: number) {
+	private calculateCallChargeWithPlan(minutes: number): number {
+		if(minutes <= 0) {
+			return 0;
+		}
+
+		const charge = this.calculateCallCharge(minutes)
+		const totalCharge = this.calculatePercentage(charge, this.props.percentage)
+
+		return totalCharge;
+	}
+
+	private calculateCallCharge(minutes: number) {
 		return this.props.tariff.getTotalValue(minutes)
+	}
+
+	private calculatePercentage(value: number, percentage: number): number {
+		const additionalValue = (value / 100) * percentage
+
+		return value + additionalValue
 	}
 }
