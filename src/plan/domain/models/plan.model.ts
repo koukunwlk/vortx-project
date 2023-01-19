@@ -13,7 +13,6 @@ export class Plan extends Model<PlanProps> {
 		super(id)
 		this.props.name = name
 		this.props.durationInMinutes = durationInMinutes
-		console.log("inside constructor", this.props)
 	}
 
 	getPlanMinutesDiscount() {
