@@ -3,7 +3,7 @@ import { Plan } from "../models/plan.model";
 export type PersistencePlan = {
 	id?: string,
 	name: string,
-	durationInMinutes: number
+	freeMinutes: number
 }
 
 export abstract class PlanRepository {

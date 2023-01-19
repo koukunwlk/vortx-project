@@ -13,7 +13,7 @@ const tariff: Tariff = new Tariff({
 
 const plan: Plan = new Plan({
   name: 'FaleMais30',
-  durationInMinutes: 30,
+  freeMinutes: 30,
 });
 
 describe('Call Model UNIT tests', () => {

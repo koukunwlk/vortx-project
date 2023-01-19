@@ -3,7 +3,7 @@ import { Plan } from "./plan.model"
 describe("Plan model UNIT tests", () => {
 
 	describe("when given a valid input", () => {
-		const input = {name: "FaleMais30", durationInMinutes: 30}
+		const input = {name: "FaleMais30", freeMinutes: 30}
 		it("should be defined", () => {
 			//Arrange
 			const plan = new Plan(input)
@@ -20,7 +20,7 @@ describe("Plan model UNIT tests", () => {
 			const minutesDiscount = plan.getPlanMinutesDiscount()
 
 			//Assert
-			expect(minutesDiscount).toEqual(input.durationInMinutes)
+			expect(minutesDiscount).toEqual(input.freeMinutes)
 		})
 	})
 })

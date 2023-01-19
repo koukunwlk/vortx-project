@@ -16,7 +16,7 @@ const tariffId = IdTool.generate();
 const planMock = new Plan(
   {
     name: 'mockPlan',
-    durationInMinutes: 30,
+    freeMinutes: 30,
   },
   planId,
 );

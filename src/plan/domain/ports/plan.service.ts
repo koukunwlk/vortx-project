@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Plan, PlanProps } from '../models/plan.model';
-import { PlanRepository } from './Plan.repository';
+import { PersistencePlan, PlanRepository } from './Plan.repository';
 
 @Injectable()
 export class PlanService {
@@ -13,7 +13,7 @@ export class PlanService {
 	getAllPlans() {
 		const persistencePlan = this.planRepository.findAll()
 
-		return persistencePlan.map(({name, durationInMinutes, id}) => new Plan({name, durationInMinutes}, id))
+		return persistencePlan.map(({name, freeMinutes, id}) => new Plan({name, freeMinutes}, id))
 	}
 
 	getPlan(options: Record<string, unknown>): Plan {
@@ -26,15 +26,15 @@ export class PlanService {
 		const plans = [
 			{
 				name: "FaleMais30",
-				durationInMinutes: 30
+				freeMinutes: 30
 			},
 			{
 				name: "FaleMais60",
-				durationInMinutes: 60
+				freeMinutes: 60
 			},			
 			{
 				name: "FaleMais120",
-				durationInMinutes: 120
+				freeMinutes: 120
 			},
 		]
 		plans.forEach(plan => {
