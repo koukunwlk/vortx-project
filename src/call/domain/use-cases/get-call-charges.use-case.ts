@@ -5,6 +5,14 @@ import { Tariff } from "src/tariff/domain/models/tariff.model";
 import { TariffService } from "src/tariff/domain/ports/tariff.service";
 import { Call } from "../models/call.model";
 
+
+interface IGetCallChargesInput {
+	origin: string
+	destination: string
+	planName: string
+	durationInMinutes: number
+}
+
 export class GetCallChargesUseCase {
 	constructor(
 		@Inject(TariffService)
@@ -14,13 +22,11 @@ export class GetCallChargesUseCase {
 		private readonly planService: PlanService
 	){}
 
-	execute() {
-		const plans = this.planService.getAllPlans()
-		const plan =  this.planService.getPlan({id: plans[0].id})
-		const tariffs = this.tariffService.getAllTariffs()
-		const tariff = this.tariffService.getTariff({id: tariffs[0].id})
+	execute({origin, destination, planName, durationInMinutes}: IGetCallChargesInput) {
+		const plan =  this.planService.getPlan({name: planName})
+		const tariff = this.tariffService.getTariff({origin, destination})
 
-		const call = new Call({tariff, plan, durationInMinutes: 30})
+		const call = new Call({tariff, plan, durationInMinutes})
 		return this.buildResponse(call, tariff, plan)
 	}
 
