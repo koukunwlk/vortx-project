@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Tariff } from "src/tariff/domain/models/tariff.model";
-import { TariffPersistence, TariffRepository } from "src/tariff/domain/ports/tariff.repository";
+import { TariffPersistence, TariffRepository } from "src/tariff/domain/port/tariff.repository";
 
 @Injectable()
 export class TariffInMemoryRepository extends TariffRepository {

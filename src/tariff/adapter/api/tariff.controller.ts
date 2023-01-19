@@ -1,5 +1,5 @@
 import { Controller, Get, Inject, Injectable } from "@nestjs/common";
-import { TariffService } from "src/tariff/domain/ports/tariff.service";
+import { TariffService } from "src/tariff/domain/port/tariff.service";
 
 @Controller('tariffs')
 export class TariffController{
