@@ -8,7 +8,7 @@ export class TariffInMemoryRepository extends TariffRepository {
 
 
 	find(options: Partial<TariffPersistence>): TariffPersistence {
-		return this.tariffs.filter(tariff => tariff.id === options.id)[0]
+		return this.tariffs.filter(tariff => tariff.origin === options.origin && tariff.destination === options.destination)[0]
 	}
 
 	findAll(): TariffPersistence[] {

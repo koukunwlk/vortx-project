@@ -13,7 +13,7 @@ export class PlanInMemory extends PlanRepository {
 	}
 
 	find(options: Partial<PersistencePlan>):  PersistencePlan {
-		return this.plans.filter(plan => plan.id === options.id)[0]
+		return this.plans.filter(plan => plan.name === options.name)[0]
 	}
 
 	create(plan: Plan): void {
