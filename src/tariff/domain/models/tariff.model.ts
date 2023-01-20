@@ -1,7 +1,7 @@
 import { Model } from "../../../common/domain/model";
 import { CreateTariffInput } from "../dto/input/create-tariff.input";
 
-type TariffProps = {
+export type TariffProps = {
 	origin: string
 	destination: string;
 	valuePerMinute: number;

@@ -9,7 +9,7 @@ export type PersistenceTariff = {
 
 export abstract class TariffRepository {
 	abstract findOne(options: Partial<PersistenceTariff>): Promise<PersistenceTariff>
-	abstract findMany(options: Partial<PersistenceTariff>): Promise<PersistenceTariff>
+	abstract findMany(options: Partial<PersistenceTariff>): Promise<PersistenceTariff[]>
 	abstract findAll(): Promise<PersistenceTariff[]>
 	abstract persist(tariff: Tariff): Promise<void>
 	abstract update(tariff: Tariff): Promise<void>

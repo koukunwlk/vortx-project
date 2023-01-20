@@ -1,5 +1,5 @@
 import { Injectable, Inject } from "@nestjs/common";
-import { Tariff } from "../models/tariff.model";
+import { Tariff, TariffProps } from "../models/tariff.model";
 import { TariffRepository } from "./tariff.repository";
 
 @Injectable()
@@ -7,21 +7,27 @@ export class TariffService {
 	constructor(
 		@Inject(TariffRepository)
 		private readonly tariffRepository: TariffRepository
-	){
-		{
-			this.createAllTariffs()
-		}
-	}
+	){}
 
-	async getAllTariffs() {
+	async getAllTariffs(): Promise<Tariff[]> {
 		const persistenceTariffs = await this.tariffRepository.findAll()
 		return persistenceTariffs.map(tariff => new Tariff(tariff, tariff.id))
 	}
 
-	async getTariff(options: Record<string, unknown>) {
+	async getTariff(options: Partial<TariffProps>):  Promise<Tariff> {
 		const persistenceTariff = await this.tariffRepository.findOne(options)
 
 		return new Tariff(persistenceTariff, persistenceTariff.id)
+	}
+
+	async getTariffs(options:  Partial<TariffProps>): Promise<Tariff[]> {
+		const persistenceTariffs = await this.tariffRepository.findMany(options)
+
+		return persistenceTariffs.map(tariff => new Tariff(tariff, tariff.id))
+	}
+
+	async createTariff(tariff: Tariff): Promise<void> {
+		await this.tariffRepository.persist(tariff)
 	}
 
 	createAllTariffs() {

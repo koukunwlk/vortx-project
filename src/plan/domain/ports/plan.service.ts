@@ -7,39 +7,33 @@ export class PlanService {
 	constructor(
 		@Inject(PlanRepository)
 		private readonly planRepository: PlanRepository
-	){
-		this.createAllPlans()
-	}
+	){}
+
 	async getAllPlans() {
 		const persistencePlan = await this.planRepository.findAll()
 
 		return persistencePlan.map(({name, freeMinutes, id}) => new Plan({name, freeMinutes}, id))
 	}
 
-	async getPlan(options: Record<string, unknown>): Promise<Plan> {
+	async getPlan(options: Partial<PlanProps>): Promise<Plan> {
 		const persistencePlan = await this.planRepository.findOne(options)
 
 		return new Plan(persistencePlan, persistencePlan.id)
 	}
 
-	async createAllPlans() {
-		const plans = [
-			{
-				name: "FaleMais30",
-				freeMinutes: 30
-			},
-			{
-				name: "FaleMais60",
-				freeMinutes: 60
-			},			
-			{
-				name: "FaleMais120",
-				freeMinutes: 120
-			},
-		]
-		plans.forEach(async plan => {
-			const planModel = new Plan(plan)
-			await this.planRepository.persist(planModel)
-		})
+	async getPlans(options: Partial<PlanProps>): Promise<Plan[]> {
+		const persistencePlans = await this.planRepository.findMany(options)
+
+		return persistencePlans.map(plan => new Plan(plan, plan.id))
+	}
+
+	async createPlan(plan: Plan): Promise<void> {
+		const planToPersist = plan.toPersistence()
+		
+		await this.planRepository.persist(planToPersist)
+	}
+
+	async updatePlan(plan: Plan): Promise<void> {
+		await this.planRepository.update(plan)
 	}
 }
