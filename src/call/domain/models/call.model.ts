@@ -1,5 +1,5 @@
 import { Model } from "../../../common/domain/model";
-import { Plan } from "../../../plan/domain/models/plan.model";
+import { Plan } from "../../../plan/domain/model/entity/plan.model";
 import { Tariff } from "../../../tariff/domain/models/tariff.model";
 
 export type CallProps = {

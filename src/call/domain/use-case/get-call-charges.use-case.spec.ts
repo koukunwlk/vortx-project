@@ -1,19 +1,16 @@
 import { IdTool } from '../../../common/utils/IdTool';
-import { Plan } from '../../../plan/domain/models/plan.model';
+import { Plan } from '../../../plan/domain/model/entity/plan.model';
 import { PlanService } from '../../../plan/domain/ports/plan.service';
 import { Tariff } from '../../../tariff/domain/models/tariff.model';
 import { TariffService } from '../../../tariff/domain/ports/tariff.service';
-import { createMock } from 'ts-auto-mock';
 import { GetCallChargesUseCase } from './get-call-charges.use-case';
-import SpyInstance = jest.SpyInstance;
-import { BadRequestException } from '@nestjs/common';
 jest.mock('../../../tariff/domain/ports/tariff.service');
 jest.mock('../../../plan/domain/ports/plan.service');
 
 /* Mocks */
 const planId = IdTool.generate();
 const tariffId = IdTool.generate();
-const planMock = new Plan(
+const planMock = Plan.create(
   {
     name: 'mockPlan',
     freeMinutes: 30,

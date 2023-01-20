@@ -1,5 +1,5 @@
 import { Call } from './call.model';
-import { Plan } from '../../../plan/domain/models/plan.model';
+import { Plan } from '../../../plan/domain/model/plan.model';
 import { Tariff } from '../../../tariff/domain/models/tariff.model';
 
 let createCallInput

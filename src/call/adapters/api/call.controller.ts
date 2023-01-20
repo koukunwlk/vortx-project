@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Inject, Post } from "@nestjs/common";
-import { GetCallChargesUseCase } from "src/call/domain/use-cases/get-call-charges.use-case";
+import { GetCallChargesUseCase } from "src/call/domain/use-case/get-call-charges.use-case";
 import { GetCallChargesInput } from "./input/get-call-charges.input";
 
 @Controller("call")
