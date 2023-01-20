@@ -1,4 +1,4 @@
-import { Tariff } from "../models/tariff.model"
+import { Tariff } from "../model/entity/tariff.model"
 
 export type PersistenceTariff = {
 	id: string

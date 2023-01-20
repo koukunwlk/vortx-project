@@ -1,5 +1,5 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { Tariff } from "src/tariff/domain/models/tariff.model";
+import { Tariff } from "../../../../domain/model/entity/tariff.model";
 import { PersistenceTariff } from "src/tariff/domain/ports/tariff.repository";
 import { FindOptionsWhere, Repository } from "typeorm";
 import { TypeOrmTariff } from "../entities/typeorm-tariff.entity";

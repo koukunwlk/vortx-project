@@ -24,7 +24,7 @@ describe("PlanName UNIT tests", () => {
 			[null],
 			[undefined],
 			["wrongPLan"]
-		])("should be defined when plan name contains \"FaleMais\" passed value %s", (invalidName) => {
+		])("should throw exception when plan name contains \"FaleMais\" passed value %s", (invalidName) => {
 			// Assert
 			expect(() => PlanName.create(invalidName)).toThrow(BadRequestException)
 		})

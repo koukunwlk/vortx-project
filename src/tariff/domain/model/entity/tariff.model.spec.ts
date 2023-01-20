@@ -5,16 +5,17 @@ describe("Tariff Model UNIT tests", () => {
 	describe("when given a valid input", () => {
 		it("should be defined", () => {
 			//Arrange
-			const tariff = new Tariff(input)
+			const tariff = Tariff.create(input)
 
 			//Assert
 			expect(tariff).toBeDefined()
 		})
 	})
+	
 	describe("when using getTotalValue method", () => {
 		it.each([[5], [10], [20], [40], [80]])("should calculate the charges of a call with %s of durations", (minutes) => {
 			//Arrange
-			const tariff = new Tariff(input)
+			const tariff = Tariff.create(input)
 	
 			//Act
 			const charges = tariff.getTotalValue(minutes)
