@@ -6,9 +6,9 @@ export class PlanController {
   constructor(private readonly planService: PlanService) {}
 
   @Get()
-  getAllPlans() {
+  async getAllPlans() {
 	this.planService.createAllPlans()
-	const plans = this.planService.getAllPlans()
+	const plans = await this.planService.getAllPlans()
 	return plans.map(plan => plan.toJson())
   }
 

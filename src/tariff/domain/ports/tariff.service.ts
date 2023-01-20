@@ -13,13 +13,13 @@ export class TariffService {
 		}
 	}
 
-	getAllTariffs() {
-		const persistenceTariffs = this.tariffRepository.findAll()
+	async getAllTariffs() {
+		const persistenceTariffs = await this.tariffRepository.findAll()
 		return persistenceTariffs.map(tariff => new Tariff(tariff, tariff.id))
 	}
 
-	getTariff(options: Record<string, unknown>) {
-		const persistenceTariff = this.tariffRepository.find(options)
+	async getTariff(options: Record<string, unknown>) {
+		const persistenceTariff = await this.tariffRepository.findOne(options)
 
 		return new Tariff(persistenceTariff, persistenceTariff.id)
 	}
@@ -48,9 +48,9 @@ export class TariffService {
 			}
 		]
 
-		tariffs.forEach(tariff => {
+		tariffs.forEach(async tariff => {
 			const tariffModel = new Tariff(tariff)
-			this.tariffRepository.create(tariffModel)
+			await this.tariffRepository.persist(tariffModel)
 		})
 	}
 }

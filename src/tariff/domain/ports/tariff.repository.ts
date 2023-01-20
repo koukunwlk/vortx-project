@@ -1,6 +1,6 @@
 import { Tariff } from "../models/tariff.model"
 
-export type TariffPersistence = {
+export type PersistenceTariff = {
 	id: string
 	origin: string,
 	destination: string,
@@ -8,7 +8,9 @@ export type TariffPersistence = {
 }
 
 export abstract class TariffRepository {
-	abstract find(options: Partial<TariffPersistence>): TariffPersistence
-	abstract findAll(): TariffPersistence[]
-	abstract create(tariff: Tariff): void
+	abstract findOne(options: Partial<PersistenceTariff>): Promise<PersistenceTariff>
+	abstract findMany(options: Partial<PersistenceTariff>): Promise<PersistenceTariff>
+	abstract findAll(): Promise<PersistenceTariff[]>
+	abstract persist(tariff: Tariff): Promise<void>
+	abstract update(tariff: Tariff): Promise<void>
 }

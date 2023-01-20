@@ -10,19 +10,19 @@ export class PlanService {
 	){
 		this.createAllPlans()
 	}
-	getAllPlans() {
-		const persistencePlan = this.planRepository.findAll()
+	async getAllPlans() {
+		const persistencePlan = await this.planRepository.findAll()
 
 		return persistencePlan.map(({name, freeMinutes, id}) => new Plan({name, freeMinutes}, id))
 	}
 
-	getPlan(options: Record<string, unknown>): Plan {
-		const persistencePlan = this.planRepository.find(options)
+	async getPlan(options: Record<string, unknown>): Promise<Plan> {
+		const persistencePlan = await this.planRepository.findOne(options)
 
 		return new Plan(persistencePlan, persistencePlan.id)
 	}
 
-	createAllPlans() {
+	async createAllPlans() {
 		const plans = [
 			{
 				name: "FaleMais30",
@@ -37,9 +37,9 @@ export class PlanService {
 				freeMinutes: 120
 			},
 		]
-		plans.forEach(plan => {
+		plans.forEach(async plan => {
 			const planModel = new Plan(plan)
-			this.planRepository.create(planModel)
+			await this.planRepository.persist(planModel)
 		})
 	}
 }
