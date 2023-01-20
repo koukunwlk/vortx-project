@@ -1,4 +1,4 @@
-import { Plan } from "../models/plan.model";
+import { Plan } from "../model/entity/plan.model";
 
 export type PersistencePlan = {
 	id?: string,

@@ -1,3 +1,4 @@
+import { IdTool } from "../../../../common/utils/IdTool"
 import { Plan } from "./plan.model"
 
 describe("Plan model UNIT tests", () => {
@@ -6,15 +7,25 @@ describe("Plan model UNIT tests", () => {
 		const input = {name: "FaleMais30", freeMinutes: 30}
 		it("should be defined", () => {
 			//Arrange
-			const plan = new Plan(input)
+			const plan = Plan.create(input)
 
 			//Assert
 			expect(plan).toBeDefined()
 		})
 
+		it("should store given ID", () => {
+			//Arrange
+			const idToStore = IdTool.generate()
+			const plan = Plan.create(input, idToStore)
+
+			//Assert
+			expect(plan.id).toEqual(idToStore)
+		})
+
+
 		it("should return the duration of the plan ", () => {
 			//Arrange
-			const plan = new Plan(input)
+			const plan = Plan.create(input)
 
 			//Act
 			const minutesDiscount = plan.getPlanMinutesDiscount()
