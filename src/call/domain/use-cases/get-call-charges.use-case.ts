@@ -22,11 +22,11 @@ export class GetCallChargesUseCase {
 		private readonly planService: PlanService
 	){}
 
-	execute({origin, destination, planName, durationInMinutes}: IGetCallChargesInput) {
-		const plan =  this.planService.getPlan({name: planName})
+	async execute({origin, destination, planName, durationInMinutes}: IGetCallChargesInput) {
+		const plan = await this.planService.getPlan({name: planName})
 		this.throwExceptionIfPlanNotExits(plan)
 
-		const tariff = this.tariffService.getTariff({origin, destination})
+		const tariff = await this.tariffService.getTariff({origin, destination})
 		this.throwExceptionIfTariffNotExits(tariff)
 		
 		const call = new Call({tariff, plan, durationInMinutes})
