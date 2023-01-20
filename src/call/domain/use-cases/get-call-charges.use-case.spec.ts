@@ -60,9 +60,9 @@ describe('GetCallChargesUseCase UNIT tests', () => {
     planName: 'mockPlan',
   };
 
-  it('should call tariff service', () => {
+  it('should call tariff service', async () => {
     //Act
-    getCallChargesUseCase.execute(input);
+    await getCallChargesUseCase.execute(input);
 
     //Assert
     expect(tariffServiceGetTariffMock).toBeCalledWith({
@@ -71,9 +71,9 @@ describe('GetCallChargesUseCase UNIT tests', () => {
     });
   });
 
-  it('should call plan service', () => {
+  it('should call plan service', async () => {
     //Act
-    getCallChargesUseCase.execute(input);
+    await getCallChargesUseCase.execute(input);
 
     //Assert
     expect(planServiceGetPlanMock).toBeCalledWith({
@@ -81,9 +81,9 @@ describe('GetCallChargesUseCase UNIT tests', () => {
     });
   });
 
-  it('should return the response message', () => {
+  it('should return the response message', async () => {
 	// Act
-    const response = getCallChargesUseCase.execute(input);
+    const response = await getCallChargesUseCase.execute(input);
 
     //Assert
     expect(response).toHaveProperty('origin');
@@ -99,7 +99,7 @@ describe('GetCallChargesUseCase UNIT tests', () => {
 	planServiceGetPlanMock.mockReturnValue(undefined)
 
 	//Act && Assert
-	expect(() => getCallChargesUseCase.execute(input)).toThrow("plan not found")
+	expect(getCallChargesUseCase.execute(input)).rejects.toThrow("plan not found")
   })
 
   it("should throw exception when tariff is undefined", () => {
@@ -107,7 +107,7 @@ describe('GetCallChargesUseCase UNIT tests', () => {
 	tariffServiceGetTariffMock.mockReturnValue(undefined)
 
 	//Act && Assert
-	expect(() => getCallChargesUseCase.execute(input)).toThrow("tariff not found")
+	expect(getCallChargesUseCase.execute(input)).rejects.toThrow("tariff not found")
   })
 
 });
