@@ -8,7 +8,6 @@ export class TariffController{
 
 	@Get()
 	async getAllTariffs(){
-		this.tariffService.createAllTariffs()
 		const tariffs =  await this.tariffService.getAllTariffs()
 		return tariffs.map(tariff => tariff.toJson())
 	}

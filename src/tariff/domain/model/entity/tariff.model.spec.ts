@@ -1,3 +1,4 @@
+import { IdTool } from "src/common/utils/IdTool"
 import { Tariff } from "./tariff.model"
 
 describe("Tariff Model UNIT tests", () => {
@@ -10,8 +11,17 @@ describe("Tariff Model UNIT tests", () => {
 			//Assert
 			expect(tariff).toBeDefined()
 		})
+
+		it("should store given ID", () => {
+			//Arrange
+			const idToStore = IdTool.generate()
+			const tariff = Tariff.create(input, idToStore)
+
+			//Assert
+			expect(tariff.id).toEqual(idToStore)
+		})
 	})
-	
+
 	describe("when using getTotalValue method", () => {
 		it.each([[5], [10], [20], [40], [80]])("should calculate the charges of a call with %s of durations", (minutes) => {
 			//Arrange

@@ -5,6 +5,7 @@ import { PlanName } from "../value-object/plan-name.vo";
 export type PlanProps = {
 	name: PlanName
 	freeMinutes: PlanFreeMinutes;
+	minutesSurplusPercentageSurcharge: number
 }
 
 export type PlanInputParams = {
@@ -15,10 +16,11 @@ export type PlanInputParams = {
 export class Plan extends Model<PlanProps> {
 	protected props = {} as PlanProps
 
-	private constructor({name, freeMinutes} : PlanProps, id?: string) {
+	private constructor({name, freeMinutes} : Omit<PlanProps, "minutesSurplusPercentageSurcharge">, id?: string) {
 		super(id)
 		this.props.name = name
 		this.props.freeMinutes = freeMinutes
+		this.props.minutesSurplusPercentageSurcharge = 10
 	}
 
 	static create({name, freeMinutes}: PlanInputParams, id?: string) {
@@ -30,5 +32,9 @@ export class Plan extends Model<PlanProps> {
 
 	getPlanMinutesDiscount() {
 		return this.props.freeMinutes.value
+	}
+
+	getPercentageSurcharge() {
+		return this.props.minutesSurplusPercentageSurcharge
 	}
 }
