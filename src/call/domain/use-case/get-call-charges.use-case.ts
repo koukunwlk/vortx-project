@@ -1,9 +1,10 @@
 import { BadRequestException, Inject } from "@nestjs/common";
 import { Plan } from "../../../plan/domain/model/entity/plan.model";
 import { PlanService } from "../../../plan/domain/ports/plan.service";
-import { Tariff } from "../../../tariff/domain/models/tariff.model";
+import { Tariff } from "../../../tariff/domain/model/entity/tariff.model";
 import { TariffService } from "../../../tariff/domain/ports/tariff.service";
-import { Call } from "../models/call.model";
+import { Call } from "../model/entity/call.model";
+import { CallService } from "../ports/call.service";
 
 
 interface IGetCallChargesInput {
@@ -19,17 +20,18 @@ export class GetCallChargesUseCase {
 		private readonly tariffService: TariffService,
 
 		@Inject(PlanService)
-		private readonly planService: PlanService
+		private readonly planService: PlanService,
 	){}
 
 	async execute({origin, destination, planName, durationInMinutes}: IGetCallChargesInput) {
-		const plan = await this.planService.getPlan({name: planName})
+		const [plan, tariff] = await Promise.all([
+			this.planService.getPlan({name: planName}),
+			this.tariffService.getTariff({origin, destination})
+		])	
 		this.throwExceptionIfPlanNotExits(plan)
-
-		const tariff = await this.tariffService.getTariff({origin, destination})
 		this.throwExceptionIfTariffNotExits(tariff)
 		
-		const call = new Call({tariff, plan, durationInMinutes})
+		const call = Call.create({durationInMinutes})
 
 		return this.buildResponse(call, tariff, plan)
 	}
@@ -47,7 +49,7 @@ export class GetCallChargesUseCase {
 	}
 
 	private buildResponse(call: Call, tariff: Tariff, plan: Plan): Record<string, unknown> {
-		const charges = call.getCallCharges()
+		const charges = CallService.getCallCharges(plan, tariff, call)
 		const {origin, destination} = tariff.toJson()
 		const {name} = plan.toJson()
 

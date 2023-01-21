@@ -1,7 +1,7 @@
 import { IdTool } from '../../../common/utils/IdTool';
 import { Plan } from '../../../plan/domain/model/entity/plan.model';
 import { PlanService } from '../../../plan/domain/ports/plan.service';
-import { Tariff } from '../../../tariff/domain/models/tariff.model';
+import { Tariff } from '../../../tariff/domain/model/entity/tariff.model';
 import { TariffService } from '../../../tariff/domain/ports/tariff.service';
 import { GetCallChargesUseCase } from './get-call-charges.use-case';
 jest.mock('../../../tariff/domain/ports/tariff.service');
@@ -18,7 +18,7 @@ const planMock = Plan.create(
   planId,
 );
 
-const tariffMock = new Tariff(
+const tariffMock = Tariff.create(
   {
     origin: '011',
     destination: '016',
