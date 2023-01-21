@@ -12,7 +12,7 @@ const planId = IdTool.generate();
 const tariffId = IdTool.generate();
 const planMock = Plan.create(
   {
-    name: 'mockPlan',
+    name: 'FaleMais30',
     freeMinutes: 30,
   },
   planId,

@@ -1,10 +1,13 @@
-import { BadRequestException, Inject } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
+import { PlanMapper } from "../../../plan/domain/ports/PlanMapper.mapper";
+import { TariffMapper } from "../../../tariff/domain/ports/tariff.mapper";
 import { Plan } from "../../../plan/domain/model/entity/plan.model";
 import { PlanService } from "../../../plan/domain/ports/plan.service";
 import { Tariff } from "../../../tariff/domain/model/entity/tariff.model";
 import { TariffService } from "../../../tariff/domain/ports/tariff.service";
 import { Call } from "../model/entity/call.model";
 import { CallService } from "../ports/call.service";
+import { GetCallChargesOutput } from "./get-call-charges.dto.output";
 
 
 interface IGetCallChargesInput {
@@ -14,6 +17,7 @@ interface IGetCallChargesInput {
 	durationInMinutes: number
 }
 
+@Injectable()
 export class GetCallChargesUseCase {
 	constructor(
 		@Inject(TariffService)
@@ -23,7 +27,7 @@ export class GetCallChargesUseCase {
 		private readonly planService: PlanService,
 	){}
 
-	async execute({origin, destination, planName, durationInMinutes}: IGetCallChargesInput) {
+	async execute({origin, destination, planName, durationInMinutes}: IGetCallChargesInput) : Promise<GetCallChargesOutput> {
 		const [plan, tariff] = await Promise.all([
 			this.planService.getPlan({name: planName}),
 			this.tariffService.getTariff({origin, destination})
@@ -48,15 +52,15 @@ export class GetCallChargesUseCase {
 		}
 	}
 
-	private buildResponse(call: Call, tariff: Tariff, plan: Plan): Record<string, unknown> {
+	private buildResponse(call: Call, tariff: Tariff, plan: Plan): GetCallChargesOutput {
 		const charges = CallService.getCallCharges(plan, tariff, call)
-		const {origin, destination} = tariff.toJson()
-		const {name} = plan.toJson()
+		const {origin, destination} = TariffMapper.toOutput(tariff)
+		const {name} = PlanMapper.toOutput(plan)
 
 		return {
 			origin,
 			destination,
-			planName: name,
+			planName: name.value,
 			charges
 		}
 	}
