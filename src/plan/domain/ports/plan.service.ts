@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Plan, PlanInputParams } from '../model/entity/plan.model';
 import { PlanRepository } from './Plan.repository';
+import { PlanMapper } from './PlanMapper.mapper';
 
 @Injectable()
 export class PlanService {
@@ -10,21 +11,27 @@ export class PlanService {
 	){}
 
 	async getAllPlans() {
-		const persistencePlan = await this.planRepository.findAll()
-
-		return persistencePlan.map(({name, freeMinutes, id}) => Plan.create({name, freeMinutes}, id))
+		const persistencePlans = await this.planRepository.findAll()
+		if(!persistencePlans) {
+			return 
+		}
+		return PlanMapper.manyToModel(persistencePlans)
 	}
 
 	async getPlan(options: Partial<PlanInputParams>): Promise<Plan> {
 		const persistencePlan = await this.planRepository.findOne(options)
-
-		return Plan.create(persistencePlan, persistencePlan.id)
+		if(!persistencePlan) {
+			return 
+		}
+		return PlanMapper.toModel(persistencePlan)
 	}
 
 	async getPlans(options: Partial<PlanInputParams>): Promise<Plan[]> {
 		const persistencePlans = await this.planRepository.findMany(options)
-
-		return persistencePlans.map(plan => Plan.create(plan, plan.id))
+		if(!persistencePlans) {
+			return 
+		}
+		return PlanMapper.manyToModel(persistencePlans)
 	}
 
 	async createPlan(plan: Plan): Promise<void> {

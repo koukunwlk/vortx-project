@@ -1,6 +1,7 @@
 import { Injectable, Inject, BadRequestException } from "@nestjs/common";
 import { CreateTariffInput } from "../dto/input/create-tariff.input";
 import { Tariff } from "../model/entity/tariff.model";
+import { TariffMapper } from "./tariff.mapper";
 import { TariffRepository } from "./tariff.repository";
 
 @Injectable()
@@ -13,23 +14,24 @@ export class TariffService {
 	async getAllTariffs(): Promise<Tariff[]> {
 		const persistenceTariffs = await this.tariffRepository.findAll()
 		
-		return persistenceTariffs.map(tariff => Tariff.create(tariff, tariff.id))
+		return TariffMapper.manyToModel(persistenceTariffs)
 	}
 
 	async getTariff(options: Partial<CreateTariffInput>):  Promise<Tariff> {
 		const persistenceTariff = await this.tariffRepository.findOne(options)
 
-		return Tariff.create(persistenceTariff, persistenceTariff.id)
+		return TariffMapper.toModel(persistenceTariff)
 	}
 
 	async getTariffs(options:  Partial<CreateTariffInput>): Promise<Tariff[]> {
 		const persistenceTariffs = await this.tariffRepository.findMany(options)
 
-		return persistenceTariffs.map(tariff => Tariff.create(tariff, tariff.id))
+		return TariffMapper.manyToModel(persistenceTariffs)
 	}
 
 	async createTariff(tariff: Tariff): Promise<void> {
-		await this.tariffRepository.persist(tariff)
+		const persistenceTariff = TariffMapper.toEntity(tariff)
+		await this.tariffRepository.persist(persistenceTariff)
 	}
 
 	createAllTariffs() {
@@ -58,7 +60,8 @@ export class TariffService {
 
 		tariffs.forEach(async tariff => {
 			const tariffModel = Tariff.create(tariff)
-			await this.tariffRepository.persist(tariffModel)
+			const persistenceTariff = TariffMapper.toEntity(tariffModel)
+			await this.tariffRepository.persist(persistenceTariff)
 		})
 	}
 }

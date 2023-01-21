@@ -11,6 +11,6 @@ export abstract class TariffRepository {
 	abstract findOne(options: Partial<PersistenceTariff>): Promise<PersistenceTariff>
 	abstract findMany(options: Partial<PersistenceTariff>): Promise<PersistenceTariff[]>
 	abstract findAll(): Promise<PersistenceTariff[]>
-	abstract persist(tariff: Tariff): Promise<void>
-	abstract update(tariff: Tariff): Promise<void>
+	abstract persist(persistenceTariff: PersistenceTariff): Promise<void>
+	abstract update(persistenceTariff: PersistenceTariff): Promise<void>
 }

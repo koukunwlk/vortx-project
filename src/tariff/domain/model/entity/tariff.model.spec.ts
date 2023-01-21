@@ -1,4 +1,4 @@
-import { IdTool } from "src/common/utils/IdTool"
+import { IdTool } from "../../../../common/utils/IdTool"
 import { Tariff } from "./tariff.model"
 
 describe("Tariff Model UNIT tests", () => {
