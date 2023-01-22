@@ -10,6 +10,6 @@ import { TariffRepositoryProvider } from './domain/ports/tariff.repository.provi
   controllers: [TariffController],
   imports: [TypeOrmModule.forFeature([TypeOrmTariff])],
   providers: [TariffRepositoryProvider],
-  exports: [TariffRepositoryProvider]
+  exports: [TariffRepositoryProvider],
 })
 export class TariffModule {}

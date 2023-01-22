@@ -32,7 +32,7 @@ export class TypeOrmTariffRepository {
     if (!persistenceTariffs) {
       return;
     }
-	
+
     return TariffMapper.manyToModel(persistenceTariffs);
   }
 

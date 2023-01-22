@@ -1,5 +1,5 @@
-import {  TariffRepository } from '../../../tariff/domain/ports/tariff.repository';
-import { IdTool } from '../../../common/utils/IdTool';
+import { TariffRepository } from '../../../tariff/domain/ports/tariff.repository';
+import { IdTool } from '../../../common/utils/Id-tool';
 import { Plan } from '../../../plan/domain/model/entity/plan.model';
 import { Tariff } from '../../../tariff/domain/model/entity/tariff.model';
 import { GetCallChargesUseCase } from './get-call-charges.use-case';
@@ -17,17 +17,17 @@ const planMock = Plan.create(
 );
 
 class TariffRepositoryMock extends TariffRepository {
-	findOne = jest.fn()
-	findMany = jest.fn()
-	persist = jest.fn()
-	update = jest.fn()
+  findOne = jest.fn();
+  findMany = jest.fn();
+  persist = jest.fn();
+  update = jest.fn();
 }
 
 class PlanRepositoryMock extends PlanRepository {
-	findOne = jest.fn()
-	findMany = jest.fn()
-	persist = jest.fn()
-	update = jest.fn()
+  findOne = jest.fn();
+  findMany = jest.fn();
+  persist = jest.fn();
+  update = jest.fn();
 }
 
 const tariffMock = Tariff.create(
@@ -45,18 +45,15 @@ let tariffRepositoryFindOneMock;
 
 describe('GetCallChargesUseCase UNIT tests', () => {
   let getCallChargesUseCase: GetCallChargesUseCase;
-  const tariffRepositoryMock = new TariffRepositoryMock()
-  const planRepositoryMock = new PlanRepositoryMock()
+  const tariffRepositoryMock = new TariffRepositoryMock();
+  const planRepositoryMock = new PlanRepositoryMock();
   beforeEach(() => {
     getCallChargesUseCase = new GetCallChargesUseCase(
-	  tariffRepositoryMock,
-      planRepositoryMock
+      tariffRepositoryMock,
+      planRepositoryMock,
     );
 
-	tariffRepositoryFindOneMock = jest.spyOn(
-	  tariffRepositoryMock,
-	  "findOne"
-    )
+    tariffRepositoryFindOneMock = jest.spyOn(tariffRepositoryMock, 'findOne');
     planRepositoryFindOneMock = jest.spyOn(planRepositoryMock, 'findOne');
 
     tariffRepositoryFindOneMock.mockReturnValue(tariffMock);
@@ -92,7 +89,7 @@ describe('GetCallChargesUseCase UNIT tests', () => {
   });
 
   it('should return the response message', async () => {
-	// Act
+    // Act
     const response = await getCallChargesUseCase.execute(input);
 
     //Assert
@@ -104,20 +101,23 @@ describe('GetCallChargesUseCase UNIT tests', () => {
     expect(response.charges).toHaveProperty('withoutPlan');
   });
 
-  it("should throw exception when plan is undefined", () => {
-	//Arrange
-	planRepositoryFindOneMock.mockReturnValue(undefined)
+  it('should throw exception when plan is undefined', () => {
+    //Arrange
+    planRepositoryFindOneMock.mockReturnValue(undefined);
 
-	//Act && Assert
-	expect(getCallChargesUseCase.execute(input)).rejects.toThrow("plan not found")
-  })
+    //Act && Assert
+    expect(getCallChargesUseCase.execute(input)).rejects.toThrow(
+      'plan not found',
+    );
+  });
 
-  it("should throw exception when tariff is undefined", () => {
-	//Arrange
-	tariffRepositoryFindOneMock.mockReturnValue(undefined)
+  it('should throw exception when tariff is undefined', () => {
+    //Arrange
+    tariffRepositoryFindOneMock.mockReturnValue(undefined);
 
-	//Act && Assert
-	expect(getCallChargesUseCase.execute(input)).rejects.toThrow("tariff not found")
-  })
-
+    //Act && Assert
+    expect(getCallChargesUseCase.execute(input)).rejects.toThrow(
+      'tariff not found',
+    );
+  });
 });

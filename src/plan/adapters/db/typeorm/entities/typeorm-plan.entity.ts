@@ -1,13 +1,13 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@Entity("plan")
+@Entity('plan')
 export class TypeOrmPlan {
-	@PrimaryColumn()
-	id: string
+  @PrimaryColumn()
+  id: string;
 
-	@Column()
-	name: string
+  @Column()
+  name: string;
 
-	@Column()
-	freeMinutes: number
+  @Column()
+  freeMinutes: number;
 }

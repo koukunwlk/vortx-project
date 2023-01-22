@@ -2,7 +2,7 @@ import { Call } from './call.model';
 import { Plan } from '../../../../plan/domain/model/entity/plan.model';
 import { Tariff } from '../../../../tariff/domain/model/entity/tariff.model';
 
-let createCallInput
+let createCallInput;
 
 //Mocks
 const tariff: Tariff = Tariff.create({
@@ -32,15 +32,12 @@ describe('Call Model UNIT tests', () => {
       expect(call).toBeDefined();
     });
 
-	it("should return the duration of the call", () => {
-		//Arrange
-		const call = Call.create(createCallInput);
+    it('should return the duration of the call', () => {
+      //Arrange
+      const call = Call.create(createCallInput);
 
-		//Assert
-		expect(call.getCallDuration()).toEqual(createCallInput.durationInMinutes)
-	})
-
+      //Assert
+      expect(call.getCallDuration()).toEqual(createCallInput.durationInMinutes);
+    });
   });
-
 });
-

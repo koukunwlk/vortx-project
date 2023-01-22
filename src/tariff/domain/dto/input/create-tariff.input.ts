@@ -1,5 +1,5 @@
 export interface CreateTariffInput {
-	origin: string
-	destination: string;
-	valuePerMinute: number;
+  origin: string;
+  destination: string;
+  valuePerMinute: number;
 }

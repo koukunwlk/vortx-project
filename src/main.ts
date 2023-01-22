@@ -9,9 +9,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle("Vxtell Api")
-    .setDescription("Basic api for consulting call charges")
-    .setVersion("1.0")
+    .setTitle('Vxtell Api')
+    .setDescription('Basic api for consulting call charges')
+    .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/docs', app, document);

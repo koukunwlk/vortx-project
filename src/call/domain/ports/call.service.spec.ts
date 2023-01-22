@@ -39,7 +39,7 @@ describe('CallService UNIT tests', () => {
 
     it('should calculate the total cost of the call with plan needs to be 10% greater', () => {
       //Arrange
-	  const longCall = Call.create({durationInMinutes: 120})
+      const longCall = Call.create({ durationInMinutes: 120 });
       const chargesService = CallService.getCallCharges(
         planMock,
         tariffMock,
@@ -62,7 +62,7 @@ describe('CallService UNIT tests', () => {
 function calculateCharges(plan: Plan, tariff: Tariff, minutes: number) {
   const minutesDiscount = plan.getPlanMinutesDiscount();
   let withPlanCharge = tariff.getTotalValue(minutes - minutesDiscount);
-  withPlanCharge += (withPlanCharge / 100) * 10
+  withPlanCharge += (withPlanCharge / 100) * 10;
   return {
     withPlan: withPlanCharge.toFixed(2),
     withoutPlan: tariff.getTotalValue(minutes).toFixed(2),

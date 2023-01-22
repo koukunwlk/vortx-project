@@ -7,6 +7,6 @@ import { GetCallChargesUseCase } from './domain/use-case/get-call-charges.use-ca
 @Module({
   controllers: [CallController],
   imports: [PlanModule, TariffModule],
-  providers: [GetCallChargesUseCase]
+  providers: [GetCallChargesUseCase],
 })
 export class CallModule {}

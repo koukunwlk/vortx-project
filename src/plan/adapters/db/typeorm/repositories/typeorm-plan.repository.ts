@@ -41,7 +41,7 @@ export class TypeOrmPlanRepository implements PlanRepository {
   }
 
   async update(plan: Plan) {
-    const persistencePlan = PlanMapper.toEntity(plan)
+    const persistencePlan = PlanMapper.toEntity(plan);
 
     await this.repository.update(persistencePlan.id, persistencePlan);
   }

@@ -1,4 +1,4 @@
-import { IdTool } from '../utils/IdTool';
+import { IdTool } from '../utils/Id-tool';
 
 export abstract class Model<T = Record<string, any>> {
   readonly id: string;
