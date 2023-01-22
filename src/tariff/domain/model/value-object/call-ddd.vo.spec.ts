@@ -3,7 +3,7 @@ import { CallDdd } from './call-ddd.vo';
 
 describe('CallDdd UNIT tests', () => {
   describe('VALID inputs', () => {
-    it.each([['011'], ['012'], ['020'], ['009'], ['035'], ['085'], ['022']])(
+    it.each([['011'], ['012'], ['020'], ['019'], ['035'], ['085'], ['022']])(
       'should be defined when ddd value follow the pattern 0NN where N is a integer number value passed %s',
       (ddd) => {
         //Arrange
