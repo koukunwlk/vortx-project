@@ -1,42 +1,53 @@
-import { InjectRepository } from "@nestjs/typeorm";
-import { Tariff } from "../../../../domain/model/entity/tariff.model";
-import { FindOptionsWhere, Repository } from "typeorm";
-import { TypeOrmTariff } from "../entities/typeorm-tariff.entity";
-import { TariffMapper } from "../../../../domain/ports/tariff.mapper";
-import { Injectable } from "@nestjs/common";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Tariff } from '../../../../domain/model/entity/tariff.model';
+import { FindOptionsWhere, Repository } from 'typeorm';
+import { TypeOrmTariff } from '../entities/typeorm-tariff.entity';
+import { TariffMapper } from '../../../../domain/ports/tariff.mapper';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class TypeOrmTariffRepository {
-	constructor(
-		@InjectRepository(TypeOrmTariff)
-		private readonly typeormRepository: Repository<TypeOrmTariff>
-	){}
+  constructor(
+    @InjectRepository(TypeOrmTariff)
+    private readonly typeormRepository: Repository<TypeOrmTariff>,
+  ) {}
 
-	async findOne(options: FindOptionsWhere<TypeOrmTariff>): Promise<Tariff> {
-		const persistenceTariff = await this.typeormRepository.findOne({
-			where: options
-		})
+  async findOne(options: FindOptionsWhere<TypeOrmTariff>): Promise<Tariff> {
+    const persistenceTariff = await this.typeormRepository.findOne({
+      where: options,
+    });
 
-		return TariffMapper.toModel(persistenceTariff)
-	}
+    if (!persistenceTariff) {
+      return;
+    }
 
-	async findMany(options?: FindOptionsWhere<TypeOrmTariff>): Promise<Tariff[]> {
-		const persistenceTariffs = await this.typeormRepository.find({
-			where: options
-		})
+    return TariffMapper.toModel(persistenceTariff);
+  }
 
-		return TariffMapper.manyToModel(persistenceTariffs)
-	}
+  async findMany(options?: FindOptionsWhere<TypeOrmTariff>): Promise<Tariff[]> {
+    const persistenceTariffs = await this.typeormRepository.find({
+      where: options,
+    });
 
-	async persist(newTariff: Tariff) {
-		const persistenceTariff = TariffMapper.toEntity(newTariff)
+    if (!persistenceTariffs) {
+      return;
+    }
+	
+    return TariffMapper.manyToModel(persistenceTariffs);
+  }
 
-		await this.typeormRepository.insert(persistenceTariff)
-	}
+  async persist(newTariff: Tariff) {
+    const persistenceTariff = TariffMapper.toEntity(newTariff);
 
-	async update(newTariff: Tariff) {
-		const persistenceTariff = TariffMapper.toEntity(newTariff)
-		
-		await this.typeormRepository.update(persistenceTariff.id, persistenceTariff)
-	}
+    await this.typeormRepository.insert(persistenceTariff);
+  }
+
+  async update(newTariff: Tariff) {
+    const persistenceTariff = TariffMapper.toEntity(newTariff);
+
+    await this.typeormRepository.update(
+      persistenceTariff.id,
+      persistenceTariff,
+    );
+  }
 }
