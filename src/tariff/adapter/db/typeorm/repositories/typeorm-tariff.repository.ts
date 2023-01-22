@@ -1,43 +1,41 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { Tariff } from "../../../../domain/model/entity/tariff.model";
-import { PersistenceTariff } from "src/tariff/domain/ports/tariff.repository";
 import { FindOptionsWhere, Repository } from "typeorm";
 import { TypeOrmTariff } from "../entities/typeorm-tariff.entity";
+import { TariffMapper } from "../../../../domain/ports/tariff.mapper";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class TypeOrmTariffRepository {
 	constructor(
 		@InjectRepository(TypeOrmTariff)
 		private readonly typeormRepository: Repository<TypeOrmTariff>
 	){}
 
-	async findOne(options: FindOptionsWhere<TypeOrmTariff>): Promise<PersistenceTariff> {
+	async findOne(options: FindOptionsWhere<TypeOrmTariff>): Promise<Tariff> {
 		const persistenceTariff = await this.typeormRepository.findOne({
 			where: options
 		})
 
-		return persistenceTariff
+		return TariffMapper.toModel(persistenceTariff)
 	}
 
-	async findMany(options: FindOptionsWhere<TypeOrmTariff>): Promise<PersistenceTariff[]> {
-		const persistenceTariff = await this.typeormRepository.find({
+	async findMany(options?: FindOptionsWhere<TypeOrmTariff>): Promise<Tariff[]> {
+		const persistenceTariffs = await this.typeormRepository.find({
 			where: options
 		})
 
-		return persistenceTariff
+		return TariffMapper.manyToModel(persistenceTariffs)
 	}
 
-	async findAll() {
-		return await this.typeormRepository.find()
-	}
-
-	async persist(tariff: Tariff) {
-		const persistenceTariff = tariff.toPersistence()
+	async persist(newTariff: Tariff) {
+		const persistenceTariff = TariffMapper.toEntity(newTariff)
 
 		await this.typeormRepository.insert(persistenceTariff)
 	}
 
-	async update(tariff: Tariff) {
-		const persistenceTariff = tariff.toPersistence()
+	async update(newTariff: Tariff) {
+		const persistenceTariff = TariffMapper.toEntity(newTariff)
 		
 		await this.typeormRepository.update(persistenceTariff.id, persistenceTariff)
 	}

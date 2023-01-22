@@ -4,10 +4,10 @@ import { TariffMapper } from "../../../tariff/domain/ports/tariff.mapper";
 import { Plan } from "../../../plan/domain/model/entity/plan.model";
 import { PlanService } from "../../../plan/domain/ports/plan.service";
 import { Tariff } from "../../../tariff/domain/model/entity/tariff.model";
-import { TariffService } from "../../../tariff/domain/ports/tariff.service";
 import { Call } from "../model/entity/call.model";
 import { CallService } from "../ports/call.service";
 import { GetCallChargesOutput } from "./get-call-charges.dto.output";
+import { TariffRepository } from "../../../tariff/domain/ports/tariff.repository";
 
 
 interface IGetCallChargesInput {
@@ -20,8 +20,8 @@ interface IGetCallChargesInput {
 @Injectable()
 export class GetCallChargesUseCase {
 	constructor(
-		@Inject(TariffService)
-		private readonly tariffService: TariffService,
+		@Inject(TariffRepository)
+		private readonly tariffRepository: TariffRepository,
 
 		@Inject(PlanService)
 		private readonly planService: PlanService,
@@ -30,7 +30,7 @@ export class GetCallChargesUseCase {
 	async execute({origin, destination, planName, durationInMinutes}: IGetCallChargesInput) : Promise<GetCallChargesOutput> {
 		const [plan, tariff] = await Promise.all([
 			this.planService.getPlan({name: planName}),
-			this.tariffService.getTariff({origin, destination})
+			this.tariffRepository.findOne({origin, destination})
 		])	
 		this.throwExceptionIfPlanNotExits(plan)
 		this.throwExceptionIfTariffNotExits(tariff)

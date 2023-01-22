@@ -1,21 +1,20 @@
 import { Controller, Get, Inject, Injectable } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
-import { type } from "os";
-import { TariffMapper } from "src/tariff/domain/ports/tariff.mapper";
-import { TariffService } from "../../domain/ports/tariff.service";
+import { TariffMapper } from "../../domain/ports/tariff.mapper";
+import { TariffRepository } from "../../domain/ports/tariff.repository";
 
 @Controller('tariff')
 @ApiTags("Tariff endpoints")
 export class TariffController{
-	@Inject(TariffService)
-	private readonly tariffService: TariffService
+	@Inject(TariffRepository)
+	private readonly tariffRepository: TariffRepository
 
 	@Get()
 	@ApiResponse({
 		description: "Return actives tariffs"
 	})
 	async getAllTariffs(){
-		const tariffs =  await this.tariffService.getAllTariffs()
+		const tariffs =  await this.tariffRepository.findMany()
 		return TariffMapper.manyToOutput(tariffs)
 	}
 }
