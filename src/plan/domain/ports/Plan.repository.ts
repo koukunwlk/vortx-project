@@ -6,10 +6,15 @@ export type PersistencePlan = {
 	freeMinutes: number
 }
 
+export type ListPlanOptions = {
+	id?: string,
+	name: string,
+	freeMinutes: number
+}
+
 export abstract class PlanRepository {
-	abstract findAll():  Promise<PersistencePlan[]>
-	abstract findOne(options: Partial<PersistencePlan>): Promise<PersistencePlan>
-	abstract findMany(options: Partial<PersistencePlan>): Promise<PersistencePlan[]>
+	abstract findOne(options: Partial<ListPlanOptions>): Promise<Plan>
+	abstract findMany(options?: Partial<ListPlanOptions>): Promise<Plan[]>
 	abstract persist(plan: Plan):  Promise<void>
 	abstract update(plan: Plan):  Promise<void>
 }

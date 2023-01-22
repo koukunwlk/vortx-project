@@ -1,44 +1,48 @@
-import { InjectRepository } from "@nestjs/typeorm";
-import { Plan } from "src/plan/domain/model/entity/plan.model";
-import { PersistencePlan, PlanRepository } from "src/plan/domain/ports/Plan.repository";
-import { FindOptionsWhere, Repository } from "typeorm";
-import { TypeOrmPlan } from "../entities/typeorm-plan.entity";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Plan } from 'src/plan/domain/model/entity/plan.model';
+import {
+  PersistencePlan,
+  PlanRepository,
+} from 'src/plan/domain/ports/Plan.repository';
+import { PlanMapper } from 'src/plan/domain/ports/PlanMapper.mapper';
+import { FindOptionsWhere, Repository } from 'typeorm';
+import { TypeOrmPlan } from '../entities/typeorm-plan.entity';
 
 export class TypeOrmPlanRepository implements PlanRepository {
-	constructor(
-		@InjectRepository(TypeOrmPlan)
-		private readonly typeormRepository: Repository<TypeOrmPlan>
-	){}
+  constructor(
+    @InjectRepository(TypeOrmPlan)
+    private readonly repository: Repository<TypeOrmPlan>,
+  ) {}
 
-	async findOne(options: FindOptionsWhere<TypeOrmPlan>): Promise<PersistencePlan> {
-		const persistencePlan = await this.typeormRepository.findOne({
-			where: options
-		})
+  async findOne(options: FindOptionsWhere<TypeOrmPlan>): Promise<Plan> {
+    const persistencePlan = await this.repository.findOne({
+      where: options,
+    });
+    if (!persistencePlan) {
+      return;
+    }
+    return PlanMapper.toModel(persistencePlan);
+  }
 
-		return persistencePlan
-	}
+  async findMany(options: FindOptionsWhere<TypeOrmPlan>): Promise<Plan[]> {
+    const persistencePlans = await this.repository.find({
+      where: options,
+    });
+    if (!persistencePlans) {
+      return;
+    }
+    return PlanMapper.manyToModel(persistencePlans);
+  }
 
-	async findMany(options: FindOptionsWhere<TypeOrmPlan>): Promise<PersistencePlan[]> {
-		const persistencePlan = await this.typeormRepository.find({
-			where: options
-		})
+  async persist(plan: Plan) {
+    const persistencePlan = PlanMapper.toEntity(plan);
 
-		return persistencePlan
-	}
+    await this.repository.insert(persistencePlan);
+  }
 
-	async findAll() {
-		return await this.typeormRepository.find()
-	}
+  async update(plan: Plan) {
+    const persistencePlan = PlanMapper.toEntity(plan)
 
-	async persist(plan: Plan) {
-		const persistencePlan = plan.toPersistence()
-
-		await this.typeormRepository.insert(persistencePlan)
-	}
-
-	async update(plan: Plan) {
-		const persistencePlan = plan.toPersistence()
-		
-		await this.typeormRepository.update(persistencePlan.id, persistencePlan)
-	}
+    await this.repository.update(persistencePlan.id, persistencePlan);
+  }
 }

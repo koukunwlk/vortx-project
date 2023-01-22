@@ -2,12 +2,12 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { PlanMapper } from "../../../plan/domain/ports/PlanMapper.mapper";
 import { TariffMapper } from "../../../tariff/domain/ports/tariff.mapper";
 import { Plan } from "../../../plan/domain/model/entity/plan.model";
-import { PlanService } from "../../../plan/domain/ports/plan.service";
 import { Tariff } from "../../../tariff/domain/model/entity/tariff.model";
 import { Call } from "../model/entity/call.model";
 import { CallService } from "../ports/call.service";
 import { GetCallChargesOutput } from "./get-call-charges.dto.output";
 import { TariffRepository } from "../../../tariff/domain/ports/tariff.repository";
+import { PlanRepository } from "../../../plan/domain/ports/Plan.repository";
 
 
 interface IGetCallChargesInput {
@@ -23,13 +23,13 @@ export class GetCallChargesUseCase {
 		@Inject(TariffRepository)
 		private readonly tariffRepository: TariffRepository,
 
-		@Inject(PlanService)
-		private readonly planService: PlanService,
+		@Inject(PlanRepository)
+		private readonly planRepository: PlanRepository,
 	){}
 
 	async execute({origin, destination, planName, durationInMinutes}: IGetCallChargesInput) : Promise<GetCallChargesOutput> {
 		const [plan, tariff] = await Promise.all([
-			this.planService.getPlan({name: planName}),
+			this.planRepository.findOne({name: planName}),
 			this.tariffRepository.findOne({origin, destination})
 		])	
 		this.throwExceptionIfPlanNotExits(plan)
