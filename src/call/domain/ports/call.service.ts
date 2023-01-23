@@ -1,20 +1,18 @@
-import { Injectable } from '@nestjs/common';
 import { Plan } from 'src/plan/domain/model/entity/plan.model';
 import { Tariff } from 'src/tariff/domain/model/entity/tariff.model';
-import { Call } from '../model/entity/call.model';
+import { CallDurationInMinutes } from '../model/value-objects/call-duration-in-minutes.vo';
 
-type CallCharges = {
+export type CallCharges = {
   withPlan: string;
   withoutPlan: string;
 };
 
 export class CallService {
-  static getCallCharges(plan: Plan, tariff: Tariff, call: Call): CallCharges {
-    const callDuration = call.getCallDuration();
+  static getCallCharges(plan: Plan, tariff: Tariff, callDuration: CallDurationInMinutes): CallCharges {
 
-    const withoutPlan = tariff.getTotalValue(callDuration).toFixed(2);
+    const withoutPlan = tariff.getTotalValue(callDuration.value).toFixed(2);
     const withPlan = this.calculateCallChargeWithPlan(
-      callDuration,
+      callDuration.value,
       plan,
       tariff,
     ).toFixed(2);

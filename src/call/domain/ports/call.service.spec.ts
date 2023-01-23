@@ -1,11 +1,9 @@
 import { Plan } from '../../../plan/domain/model/entity/plan.model';
 import { Tariff } from '../../../tariff/domain/model/entity/tariff.model';
-import { Call } from '../model/entity/call.model';
+import { CallDurationInMinutes } from '../model/value-objects/call-duration-in-minutes.vo';
 import { CallService } from './call.service';
 
-const callMock = Call.create({
-  durationInMinutes: 15,
-});
+const callDurationMock = CallDurationInMinutes.create(61)
 const planMock = Plan.create({
   name: 'FaleMais30',
   freeMinutes: 30,
@@ -23,14 +21,14 @@ describe('CallService UNIT tests', () => {
       const chargesService = CallService.getCallCharges(
         planMock,
         tariffMock,
-        callMock,
+        callDurationMock,
       );
 
       //Act
       const totalCharges = calculateCharges(
         planMock,
         tariffMock,
-        callMock.getCallDuration(),
+        callDurationMock.value,
       );
 
       //Assert
@@ -39,18 +37,18 @@ describe('CallService UNIT tests', () => {
 
     it('should calculate the total cost of the call with plan needs to be 10% greater', () => {
       //Arrange
-      const longCall = Call.create({ durationInMinutes: 120 });
+      const longCallDuration = CallDurationInMinutes.create(120);
       const chargesService = CallService.getCallCharges(
         planMock,
         tariffMock,
-        longCall,
+        longCallDuration,
       );
 
       //Act
       const totalCharges = calculateCharges(
         planMock,
         tariffMock,
-        longCall.getCallDuration(),
+        longCallDuration.value,
       );
 
       //Assert

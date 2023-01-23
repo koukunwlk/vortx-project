@@ -3,11 +3,11 @@ import { PlanMapper } from '../../../plan/domain/ports/PlanMapper.mapper';
 import { TariffMapper } from '../../../tariff/domain/ports/tariff.mapper';
 import { Plan } from '../../../plan/domain/model/entity/plan.model';
 import { Tariff } from '../../../tariff/domain/model/entity/tariff.model';
-import { Call } from '../model/entity/call.model';
-import { CallService } from '../ports/call.service';
+import { CallCharges, CallService } from '../ports/call.service';
 import { GetCallChargesOutput } from './get-call-charges.dto.output';
 import { TariffRepository } from '../../../tariff/domain/ports/tariff.repository';
 import { PlanRepository } from '../../../plan/domain/ports/Plan.repository';
+import { CallDurationInMinutes } from '../model/value-objects/call-duration-in-minutes.vo';
 
 interface IGetCallChargesInput {
   origin: string;
@@ -39,9 +39,10 @@ export class GetCallChargesUseCase {
     this.throwExceptionIfPlanNotExits(plan);
     this.throwExceptionIfTariffNotExits(tariff);
 
-    const call = Call.create({ durationInMinutes });
+	const callDuration = CallDurationInMinutes.create(durationInMinutes)
+    const callCharges = CallService.getCallCharges(plan, tariff, callDuration);
 
-    return this.buildResponse(call, tariff, plan);
+    return this.buildResponse(callCharges, tariff, plan, callDuration);
   }
 
   private throwExceptionIfPlanNotExits(plan: Plan) {
@@ -57,15 +58,16 @@ export class GetCallChargesUseCase {
   }
 
   private buildResponse(
-    call: Call,
+    charges: CallCharges,
     tariff: Tariff,
     plan: Plan,
+	callDuration: CallDurationInMinutes
   ): GetCallChargesOutput {
-    const charges = CallService.getCallCharges(plan, tariff, call);
     const { origin, destination } = TariffMapper.toOutput(tariff);
     const { name } = PlanMapper.toOutput(plan);
 
     return {
+	  callDuration: callDuration.value,
       origin,
       destination,
       planName: name.value,
