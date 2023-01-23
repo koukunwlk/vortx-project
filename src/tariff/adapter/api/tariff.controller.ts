@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Injectable } from '@nestjs/common';
+import { Controller, Get, Inject } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TariffMapper } from '../../domain/ports/tariff.mapper';
 import { TariffRepository } from '../../domain/ports/tariff.repository';

@@ -3,7 +3,7 @@ import { Tariff } from '../../../tariff/domain/model/entity/tariff.model';
 import { CallDurationInMinutes } from '../model/value-objects/call-duration-in-minutes.vo';
 import { CallService } from './call.service';
 
-const callDurationMock = CallDurationInMinutes.create(61)
+const callDurationMock = CallDurationInMinutes.create(61);
 const planMock = Plan.create({
   name: 'FaleMais30',
   freeMinutes: 30,

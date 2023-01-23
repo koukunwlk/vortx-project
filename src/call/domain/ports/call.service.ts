@@ -8,8 +8,11 @@ export type CallCharges = {
 };
 
 export class CallService {
-  static getCallCharges(plan: Plan, tariff: Tariff, callDuration: CallDurationInMinutes): CallCharges {
-
+  static getCallCharges(
+    plan: Plan,
+    tariff: Tariff,
+    callDuration: CallDurationInMinutes,
+  ): CallCharges {
     const withoutPlan = tariff.getTotalValue(callDuration.value).toFixed(2);
     const withPlan = this.calculateCallChargeWithPlan(
       callDuration.value,

@@ -39,7 +39,7 @@ export class GetCallChargesUseCase {
     this.throwExceptionIfPlanNotExits(plan);
     this.throwExceptionIfTariffNotExits(tariff);
 
-	const callDuration = CallDurationInMinutes.create(durationInMinutes)
+    const callDuration = CallDurationInMinutes.create(durationInMinutes);
     const callCharges = CallService.getCallCharges(plan, tariff, callDuration);
 
     return this.buildResponse(callCharges, tariff, plan, callDuration);
@@ -61,13 +61,13 @@ export class GetCallChargesUseCase {
     charges: CallCharges,
     tariff: Tariff,
     plan: Plan,
-	callDuration: CallDurationInMinutes
+    callDuration: CallDurationInMinutes,
   ): GetCallChargesOutput {
     const { origin, destination } = TariffMapper.toOutput(tariff);
     const { name } = PlanMapper.toOutput(plan);
 
     return {
-	  callDuration: callDuration.value,
+      callDuration: callDuration.value,
       origin,
       destination,
       planName: name.value,
