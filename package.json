@@ -21,7 +21,13 @@
     "migration:generate": "yarn typeorm migration:generate -d src/migration.config.ts ",
     "migration:create": "yarn typeorm migration:create -d src/migration.config.ts ",
     "migration:up": "yarn typeorm migration:run -d src/migration.config.ts",
-    "migration:revert": "yarn typeorm migration:revert -d src/migration.config.ts"
+    "migration:revert": "yarn typeorm migration:revert -d src/migration.config.ts",
+	"seed:generate": "yarn typeorm migration:generate -d src/seed.config.ts ",
+    "seed:create": "yarn typeorm migration:create  ",
+    "seed:up": "yarn typeorm migration:run -d src/seed.config.ts",
+    "seed:revert": "yarn typeorm migration:revert -d src/seed.config.ts",
+    "database:jobs": "yarn migration:up && yarn seed:up"
+ 
   },
   "dependencies": {
     "@nestjs/common": "^9.2.1",
