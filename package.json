@@ -1,8 +1,8 @@
 {
-  "name": "vxcell-nestjs",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "name": "vxtel-nestjs",
+  "version": "1.0.0",
+  "description": "Este projeto foi desenvolvido para uma empresa fictícia chamada VxTel especializada em ligações de longa distância, com o intuito de fornecer uma API REST para a simulação de tarifas de ligações visando mostrar ao consumidor final a economia que ele pode obter ao adquirir um plano de telefonia",
+  "author": "Moa Amaro",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -39,7 +39,6 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "jest-ts-auto-mock": "^2.1.0",
-    "mysql2": "^3.0.1",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
