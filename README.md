@@ -20,26 +20,26 @@ yarn: v1.22.19^ <br/>
 postgres: v15.0.0^ <br/>
 
 <h2 > Como iniciar o projeto </h2>
-Apos baixar este projeto, entre na pasta raiz dele.
+Após baixar este projeto, entre na pasta raiz dele.
 
 Instale os pacotes utilizando o comando na raiz do projeto
 ```
 yarn install
 ```
 
-Logo em seguida rode o comando abaixo para criar um container com uma instancia de um banco de dados PostgreSQL
+Logo em seguida rode o comando abaixo para criar um container com uma instância de um banco de dados PostgreSQL
 ```
 docker compose up -d
 ```
 
-Aguarde a criação do container, e logo apos execute o comando
+Aguarde a criação do container, e logo após execute o comando
 
 ```
 yarn database:jobs
 ```
 Para criar as tabelas e o popular o banco de dados
 
-Para iniciar o service utilize o comando 
+Para iniciar o serviço utilize o comando 
 
 ```bash
 yarn start
@@ -58,7 +58,7 @@ yarn start:dev
  * Jest
 
 <h2>Testes</h2>
-Esse projeto tem testes para a camada de dominio.
+Esse projeto tem testes para a camada de domínio.
 Você pode utilizar os testes através dos seguintes comandos
 Para executar todos os testes utilize:
 
@@ -72,7 +72,7 @@ Para executar os testes das entidades/models utilize:
 yarn test model
 ```
 
-Para executar os testes dos o objetos de valor utilize:
+Para executar os testes dos objetos de valor utilize:
 
 ```
 yarn test vo
