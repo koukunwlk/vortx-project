@@ -7,7 +7,7 @@ export class PlanMapper {
     return {
       id,
       name: name.value,
-      freeMinutes: freeMinutes.value,
+      freeMinutes: Number(freeMinutes.value),
     };
   }
 

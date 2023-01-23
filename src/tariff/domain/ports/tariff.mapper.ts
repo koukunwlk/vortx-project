@@ -8,7 +8,7 @@ export class TariffMapper {
       id,
       origin: origin.value,
       destination: destination.value,
-      valuePerMinute: valuePerMinute.value,
+      valuePerMinute: Number(valuePerMinute.value),
     };
   }
 

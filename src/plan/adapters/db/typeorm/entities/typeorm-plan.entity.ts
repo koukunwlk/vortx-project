@@ -2,10 +2,14 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('plan')
 export class TypeOrmPlan {
-  @PrimaryColumn()
+	@PrimaryColumn({
+		type: "uuid"
+	})
   id: string;
 
-  @Column()
+  @Column({
+	unique: true
+  })
   name: string;
 
   @Column()

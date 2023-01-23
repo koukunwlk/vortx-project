@@ -21,8 +21,8 @@ export class GetCallChargesInput {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    default: 'FalaMais30',
-    description: '',
+    default: 'FaleMais30',
+    description: 'VxTel plan with free minutes',
   })
   planName: string;
 

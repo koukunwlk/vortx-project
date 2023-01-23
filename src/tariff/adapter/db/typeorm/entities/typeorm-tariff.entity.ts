@@ -2,7 +2,9 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('tariff')
 export class TypeOrmTariff {
-  @PrimaryColumn()
+  @PrimaryColumn({
+	type: "uuid"
+  })
   id: string;
 
   @Column()
