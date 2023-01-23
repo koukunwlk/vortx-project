@@ -8,5 +8,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: 'vxtell',
   password: 'vxtell123',
   database: 'vxtell',
-  synchronize: true,
+  synchronize: false,
 };

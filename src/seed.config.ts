@@ -6,5 +6,5 @@ export default new DataSource({
   ...typeOrmConfig,
   entities: ['src/**/entities/*.entity.ts'],
   migrations: ['db/seeds/*.ts'],
-  migrationsTransactionMode: 'each',
+  migrationsTransactionMode: "each"
 });

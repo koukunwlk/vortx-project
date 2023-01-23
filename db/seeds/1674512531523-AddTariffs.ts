@@ -43,6 +43,7 @@ export class AddTariff1674512531523 implements MigrationInterface {
 
     tariffs.forEach(async (tariff) => {
       const tariffModel = Tariff.create(tariff);
+	  
       await this.tariffRepository.save(TariffMapper.toEntity(tariffModel));
     });
   }
