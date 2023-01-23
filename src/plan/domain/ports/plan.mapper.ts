@@ -3,10 +3,10 @@ import { PersistencePlan } from './Plan.repository';
 
 export class PlanMapper {
   static toEntity(model: Plan): PersistencePlan {
-    const { id, planName, freeMinutes } = model.toPersistence();
+    const { id, name, freeMinutes } = model.toPersistence();
     return {
       id,
-      name: planName.value,
+      name: name.value,
       freeMinutes: freeMinutes.value,
     };
   }
