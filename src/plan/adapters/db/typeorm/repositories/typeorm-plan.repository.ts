@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Plan } from 'src/plan/domain/model/entity/plan.model';
 import { PlanRepository } from 'src/plan/domain/ports/Plan.repository';
-import { PlanMapper } from 'src/plan/domain/ports/PlanMapper.mapper';
+import { PlanMapper } from 'src/plan/domain/ports/plan.mapper';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { TypeOrmPlan } from '../entities/typeorm-plan.entity';
 

@@ -12,7 +12,7 @@ export class CallController {
     private readonly getCallChargesUseCase: GetCallChargesUseCase,
   ) {}
 
-  @Post()
+  @Post("/simulate")
   @ApiResponse({
     description: 'Return the call charges simulation',
   })

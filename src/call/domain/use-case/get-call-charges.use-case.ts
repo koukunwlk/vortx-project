@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { PlanMapper } from '../../../plan/domain/ports/PlanMapper.mapper';
+import { PlanMapper } from '../../../plan/domain/ports/plan.mapper';
 import { TariffMapper } from '../../../tariff/domain/ports/tariff.mapper';
 import { Plan } from '../../../plan/domain/model/entity/plan.model';
 import { Tariff } from '../../../tariff/domain/model/entity/tariff.model';
