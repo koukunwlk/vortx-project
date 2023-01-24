@@ -53,11 +53,13 @@ yarn start:dev
 ```
 
 <h2> Tecnologias utilizadas </h2>
- * Typescript
- * PostgreSQL
- * TypeOrm
- * NestJS
- * Jest
+<ul>
+  <li>Typescript</li>
+  <li>NestJS</li>
+  <li>PostgreSQL</li>
+  <li>TypeOrm</li>
+  <li>Jest</li>
+</ul>
 
 <h2>Testes</h2>
 Esse projeto tem testes para a camada de domínio.
@@ -71,13 +73,13 @@ yarn test
 Para executar os testes das entidades/models utilize:
 
 ```
-yarn test model
+yarn test model.spec.ts
 ```
 
 Para executar os testes dos objetos de valor utilize:
 
 ```
-yarn test vo
+yarn test vo.spec.ts
 ```
 
 <h5 align="center"> feito com :heart: by Moa Amaro</h5>
