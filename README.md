@@ -11,6 +11,8 @@ Este projeto foi desenvolvido para uma empresa fictícia chamada VxTel especiali
 :heavy_check_mark: Simulação de preços por chamada <br/>
 :heavy_check_mark: Documentação da API
 
+![](./assets/vxtel-nestjs.gif)
+
 <h2 > Requisitos </h2>
 
 NodeJs: v16.19.0^ <br/>

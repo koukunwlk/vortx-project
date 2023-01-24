@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe());
-
+  app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('VxTel Api')
     .setDescription('Basic api for consulting call charges')
