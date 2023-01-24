@@ -93,12 +93,18 @@ describe('GetCallChargesUseCase UNIT tests', () => {
     const response = await getCallChargesUseCase.execute(input);
 
     //Assert
-    expect(response).toHaveProperty('origin');
-    expect(response).toHaveProperty('destination');
-    expect(response).toHaveProperty('planName');
-    expect(response).toHaveProperty('charges');
-    expect(response.charges).toHaveProperty('withPlan');
-    expect(response.charges).toHaveProperty('withoutPlan');
+    expect(response).toEqual(
+      expect.objectContaining({
+        origin: expect.any(String),
+        callDuration: expect.any(Number),
+        destination: expect.any(String),
+        planName: expect.any(String),
+        charges: expect.objectContaining({
+          withPlan: expect.any(String),
+          withoutPlan: expect.any(String),
+        }),
+      }),
+    );
   });
 
   it('should throw exception when plan is undefined', () => {

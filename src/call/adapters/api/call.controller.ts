@@ -4,7 +4,7 @@ import { GetCallChargesOutput } from 'src/call/domain/use-case/get-call-charges.
 import { GetCallChargesUseCase } from 'src/call/domain/use-case/get-call-charges.use-case';
 import { GetCallChargesInput } from './input/get-call-charges.input';
 
-@Controller('call')
+@Controller('calls')
 @ApiTags('Call endpoints')
 export class CallController {
   constructor(

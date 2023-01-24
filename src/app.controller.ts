@@ -1,17 +1,26 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Res } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
 @Controller()
-@ApiTags('Application Heath')
+@ApiTags('Application Health')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
   @ApiResponse({
-    description: 'check if application is running',
+    description: 'Redirect for docs pages',
   })
-  getHello(): string {
+  redirect(@Res() response): string {
+	response.redirect("/docs")
     return this.appService.getHello();
+  }
+
+  @Get("health")
+  @ApiResponse({
+    description: 'Check if application is running',
+  })
+  verifyHealth() {
+	return this.appService.getHello()
   }
 }

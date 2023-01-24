@@ -65,12 +65,11 @@ export class GetCallChargesUseCase {
   ): GetCallChargesOutput {
     const { origin, destination } = TariffMapper.toOutput(tariff);
     const { name } = PlanMapper.toOutput(plan);
-
     return {
       callDuration: callDuration.value,
       origin,
       destination,
-      planName: name.value,
+      planName: name,
       charges,
     };
   }

@@ -3,7 +3,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TariffMapper } from '../../domain/ports/tariff.mapper';
 import { TariffRepository } from '../../domain/ports/tariff.repository';
 
-@Controller('tariff')
+@Controller('tariffs')
 @ApiTags('Tariff endpoints')
 export class TariffController {
   @Inject(TariffRepository)

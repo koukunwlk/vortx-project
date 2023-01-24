@@ -9,7 +9,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('Vxtell Api')
+    .setTitle('VxTel Api')
     .setDescription('Basic api for consulting call charges')
     .setVersion('1.0')
     .build();

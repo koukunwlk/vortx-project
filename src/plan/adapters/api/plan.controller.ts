@@ -3,7 +3,7 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PlanRepository } from 'src/plan/domain/ports/Plan.repository';
 import { PlanMapper } from 'src/plan/domain/ports/plan.mapper';
 
-@Controller('plan')
+@Controller('plans')
 @ApiTags('Plan endpoints')
 export class PlanController {
   constructor(private readonly planRepository: PlanRepository) {}
