@@ -82,4 +82,16 @@ Para executar os testes dos objetos de valor utilize:
 yarn test vo.spec.ts
 ```
 
+Para executar os testes dos casos de uso utilize:
+
+```
+yarn test use-case.spec.ts
+```
+
+Para executar os testes dos serviços utilize:
+
+```
+yarn test service.spec.ts
+```
+
 <h5 align="center"> feito com :heart: by Moa Amaro</h5>
